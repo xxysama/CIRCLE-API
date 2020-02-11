@@ -26,12 +26,23 @@ public class SecUserServiceImpl extends ServiceImpl<SecUserMapper, SecUser> impl
     SecUserMapper userMapper;
     @Override
     public Boolean existUser(SecUser user) {
-        
+
         Integer count = userMapper.selectCount(Wrappers.<SecUser>lambdaQuery().eq(SecUser::getEmail,user.getEmail()));
         if(count>=1){
             return false;
         }else {
             return true;
+        }
+    }
+
+    @Override
+    public Boolean existUsername(SecUser user) {
+
+        Integer count = userMapper.selectCount(Wrappers.<SecUser>lambdaQuery().eq(SecUser::getUserName,user.getUserName()));
+        if(count>=1){
+            return true;
+        }else {
+            return false;
         }
     }
 }

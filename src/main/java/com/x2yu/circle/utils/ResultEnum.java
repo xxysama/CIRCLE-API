@@ -19,7 +19,15 @@ public enum ResultEnum {
 
     REGISTER_SUCCESS("300", "注册成功"),
 
-    REGISTER_ERROR("301", "邮箱已注册");
+    REGISTER_EMAIL_ERROR("301", "邮箱已注册"),
+
+    REGISTER_USERNAME_ERROR("302", "用户名已注册"),
+
+    LOGIN_SUCCESS("400", "登录成功"),
+
+    UNKNOWN_ACCOUNT_ERROR("401", "错误账号"),
+
+    INCORRECT_PASS_ERROR("402","密码错误");
 
     private String code;
     private String message;

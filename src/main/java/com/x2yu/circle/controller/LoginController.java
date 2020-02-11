@@ -1,23 +1,22 @@
 package com.x2yu.circle.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.x2yu.circle.entity.SecRole;
 import com.x2yu.circle.entity.SecUser;
 import com.x2yu.circle.entity.SecUserRole;
-import com.x2yu.circle.entity.User;
 import com.x2yu.circle.service.ISecRoleService;
 import com.x2yu.circle.service.ISecUserRoleService;
 import com.x2yu.circle.service.ISecUserService;
 import com.x2yu.circle.utils.Result;
 import com.x2yu.circle.utils.ResultUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.HtmlUtils;
-
-import java.util.Objects;
 
 /**
  * @Author: x2yu
@@ -38,18 +37,26 @@ public class LoginController {
 
     @ResponseBody
     @PostMapping(value = "api/login")
-    public Result login(@RequestBody User user){
-//        String username = user.getUsername();
-//        username = HtmlUtils.htmlEscape(username);
-//
-//        if (!Objects.equals("admin", username) || !Objects.equals("123456", user.getPassword())) {
-//            String message = "账号密码错误";
-//            System.out.println("登陆测试");
-//            return new Result(400);
-//        } else {
-//            return new Result(200);
-//        }
-        return ResultUtil.success();
+    public Result login(@RequestBody SecUser user){
+
+        //Shiro获取当前用户
+        Subject subject = SecurityUtils.getSubject();
+
+        //封装用户登录数据
+        UsernamePasswordToken token =new UsernamePasswordToken(user.getUserName(),user.getPassword());
+
+        try {
+            //执行登录
+            subject.login(token);
+            return ResultUtil.loginSuccess();
+        } catch (UnknownAccountException e) {
+            // 错误账号
+            return ResultUtil.unknownAccount();
+        }  catch ( IncorrectCredentialsException ice) {
+            // 密码错误
+            return ResultUtil.incorrectPass();
+        }
+
     }
 
     @ResponseBody
@@ -63,6 +70,12 @@ public class LoginController {
     @PostMapping("api/register")
     public Result register(@RequestBody SecUser secUser){
         try {
+
+            // 如果为真 返回提示用户名已占用
+            while (userService.existUsername(secUser)){
+                return ResultUtil.registerUsernameError();
+            }
+
             //先查询是否注册过 然后注册
             while(userService.existUser(secUser)){
                 System.out.println("没有注册过！");
@@ -78,8 +91,8 @@ public class LoginController {
                 userRoleService.save(secUserRole);
                 return ResultUtil.registerSuccess();
             }
-            System.out.println("已经注册过了！");
-            return ResultUtil.registerError();
+            System.out.println("邮箱已经注册过了！");
+            return ResultUtil.registerEmailError();
 
         } catch (Exception e) {
             e.printStackTrace();

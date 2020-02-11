@@ -1,5 +1,7 @@
 package com.x2yu.circle.Realm;
 
+import com.x2yu.circle.entity.SecUser;
+import com.x2yu.circle.service.ISecUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UserRealm extends AuthorizingRealm {
 
+    @Autowired
+    ISecUserService userService;
 
     //授权
     @Override
@@ -33,7 +37,7 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 
         //链接查询数据库用户
-
+//        SecUser user = userServic
 
 
         //密码认证

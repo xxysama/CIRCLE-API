@@ -18,5 +18,7 @@ public interface ISecUserService extends IService<SecUser> {
     //判断是否存在当前用户
     public Boolean existUser(SecUser user);
 
+    //判断用户名是否使用
+    public Boolean existUsername(SecUser user);
 
 }

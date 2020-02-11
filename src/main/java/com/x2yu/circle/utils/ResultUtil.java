@@ -60,10 +60,39 @@ public class ResultUtil {
     }
 
     /*
-    * 注册错误
+    * 注册邮箱错误
     * */
-    public static Result registerError(){
-        return new Result(ResultEnum.REGISTER_ERROR.getCode(),ResultEnum.REGISTER_ERROR.getMessage());
+    public static Result registerEmailError(){
+        return new Result(ResultEnum.REGISTER_EMAIL_ERROR.getCode(),ResultEnum.REGISTER_EMAIL_ERROR.getMessage());
+    }
+
+    /*
+     * 注册邮箱错误
+     * */
+    public static Result registerUsernameError(){
+        return new Result(ResultEnum.REGISTER_USERNAME_ERROR.getCode(),ResultEnum.REGISTER_USERNAME_ERROR.getMessage());
+    }
+
+
+    /*
+     * 登录成功
+     * */
+    public static Result loginSuccess(){
+        return new Result(ResultEnum.LOGIN_SUCCESS.getCode(),ResultEnum.LOGIN_SUCCESS.getMessage());
+    }
+
+    /*
+     * 错误账号
+     * */
+    public static Result unknownAccount(){
+        return new Result(ResultEnum.UNKNOWN_ACCOUNT_ERROR.getCode(),ResultEnum.UNKNOWN_ACCOUNT_ERROR.getMessage());
+    }
+
+    /*
+     * 密码错误
+     * */
+    public static Result incorrectPass(){
+        return new Result(ResultEnum.INCORRECT_PASS_ERROR.getCode(),ResultEnum.INCORRECT_PASS_ERROR.getMessage());
     }
 
     /**
