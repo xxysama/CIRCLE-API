@@ -3,7 +3,7 @@ package com.x2yu.circle.entity;
 /**
  * @Author: x2yu
  * @Date: 2020/2/7 14:46
- * @Describe：用户对象
+ * @Describe：测试简易用户对象
  */
 public class User {
     int id;

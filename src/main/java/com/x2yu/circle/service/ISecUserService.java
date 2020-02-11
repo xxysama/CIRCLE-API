@@ -2,6 +2,7 @@ package com.x2yu.circle.service;
 
 import com.x2yu.circle.entity.SecUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -11,6 +12,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author x2yu
  * @since 2020-02-10
  */
+
 public interface ISecUserService extends IService<SecUser> {
+
+    //判断是否存在当前用户
+    public Boolean existUser(SecUser user);
+
 
 }
