@@ -37,10 +37,13 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 
         //链接查询数据库用户
-//        SecUser user = userServic
+        SecUser user = userService.getUserByName(token.getUsername());
 
+        if(user == null ){
+            return null;
+        }
 
         //密码认证
-        return new SimpleAuthenticationInfo("",'0',"");
+        return new SimpleAuthenticationInfo("",user.getPassword(),"");
     }
 }

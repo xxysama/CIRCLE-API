@@ -60,13 +60,6 @@ public class LoginController {
     }
 
     @ResponseBody
-    @GetMapping(value = "api/testRole")
-    public SecRole getSecRole(){
-        SecRole secRole = roleService.getById(1);
-        return secRole;
-    }
-
-    @ResponseBody
     @PostMapping("api/register")
     public Result register(@RequestBody SecUser secUser){
         try {
@@ -98,5 +91,15 @@ public class LoginController {
             e.printStackTrace();
             return ResultUtil.dataBaseError();
         }
+    }
+
+    @ResponseBody
+    @GetMapping("api/logout")
+    public Result logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        System.out.println("登出成功");
+
+        return ResultUtil.logoutSuccess();
     }
 }

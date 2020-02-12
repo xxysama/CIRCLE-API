@@ -19,6 +19,7 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
+    @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("getDefaultWebSecurityManager") DefaultWebSecurityManager securityManager){
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 
@@ -28,9 +29,9 @@ public class ShiroConfig {
         //添加shiro的内置过滤器 anon:无需认证 authc:必须认证 user:拥有记住我 perms：拥有对资源的 role:拥有某个角色
 
         Map<String,String> filterMap = new HashMap<>();
+//        filterMap.put("/**","authc");//认证可进
 
         bean.setLoginUrl("/toLogin");
-
         bean.setFilterChainDefinitionMap(filterMap);
 
         return bean;

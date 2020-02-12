@@ -95,6 +95,12 @@ public class ResultUtil {
         return new Result(ResultEnum.INCORRECT_PASS_ERROR.getCode(),ResultEnum.INCORRECT_PASS_ERROR.getMessage());
     }
 
+    /*
+     * 成功登出
+     * */
+    public static Result logoutSuccess(){
+        return new Result(ResultEnum.LOGOUT_SUCCESS.getCode(),ResultEnum.LOGOUT_SUCCESS.getMessage());
+    }
     /**
      * @param @param  code
      * @param @param  msg

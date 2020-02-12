@@ -21,4 +21,6 @@ public interface ISecUserService extends IService<SecUser> {
     //判断用户名是否使用
     public Boolean existUsername(SecUser user);
 
+    //根据用户名获取用户
+    public SecUser getUserByName(String username);
 }

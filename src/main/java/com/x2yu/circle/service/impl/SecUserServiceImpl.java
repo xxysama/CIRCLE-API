@@ -1,6 +1,7 @@
 package com.x2yu.circle.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.x2yu.circle.entity.SecUser;
 import com.x2yu.circle.mapper.SecUserMapper;
@@ -44,5 +45,13 @@ public class SecUserServiceImpl extends ServiceImpl<SecUserMapper, SecUser> impl
         }else {
             return false;
         }
+    }
+
+    @Override
+    public SecUser getUserByName(String username) {
+        QueryWrapper<SecUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("user_name",username);
+
+        return userMapper.selectOne(queryWrapper);
     }
 }

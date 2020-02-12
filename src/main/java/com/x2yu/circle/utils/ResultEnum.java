@@ -27,7 +27,10 @@ public enum ResultEnum {
 
     UNKNOWN_ACCOUNT_ERROR("401", "错误账号"),
 
-    INCORRECT_PASS_ERROR("402","密码错误");
+    INCORRECT_PASS_ERROR("402","密码错误"),
+
+    LOGOUT_SUCCESS("403","成功登出");
+
 
     private String code;
     private String message;
