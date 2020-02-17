@@ -27,8 +27,8 @@ public class TblBookInfoServiceImpl extends ServiceImpl<TblBookInfoMapper, TblBo
     @Override
     public List<TblBookInfo> getHomeBooks() {
 
-        QueryWrapper<TblBookInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("public_time");
+//        QueryWrapper<TblBookInfo> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.orderByDesc("public_time");
 
         return bookInfoMapper.getHomeBooks();
     }
