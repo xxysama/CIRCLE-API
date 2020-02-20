@@ -32,4 +32,12 @@ public class TblBookInfoController {
     public List<TblBookInfo> getHomeBooks(){
         return bookInfoService.getHomeBooks();
     }
+
+    @GetMapping("api/book/rand5/{bid}")
+    public  List<TblBookInfo> getRandFiveBooks(@PathVariable("bid") Integer bid){
+
+        String author = bookInfoService.getById(bid).getAuthor();
+
+        return bookInfoService.getRandFiveByAuthor(author);
+    }
 }

@@ -19,4 +19,9 @@ public interface ITblBookInfoService extends IService<TblBookInfo> {
      * 获取首页展示最新10本书籍
      * */
     public List<TblBookInfo> getHomeBooks();
+
+    /**
+     * 根据作者随机获取书籍集合 5
+     * */
+    public List<TblBookInfo> getRandFiveByAuthor(String author);
 }
