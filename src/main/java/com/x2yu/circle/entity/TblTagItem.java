@@ -1,58 +1,43 @@
 package com.x2yu.circle.entity;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 走马灯展示信息表
+ * 标签项表
  * </p>
  *
  * @author x2yu
- * @since 2020-02-17
+ * @since 2020-02-21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class TblCarouselInfo implements Serializable {
+public class TblTagItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
+    /**
+     * 标签项id
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    /**
+     * 标签项名字
+     */
+    private String tagItemName;
 
     /**
-     * 标题
+     * 主标签id
      */
-    private String title;
-
-    /**
-     * 作者
-     */
-    private String author;
-
-    /**
-     * 插图
-     */
-    private String illustration;
-
-    /**
-     * 内容
-     */
-    private String content;
-
-    /**
-     * 区分书影展示
-     */
-    private String type;
+    private Integer tid;
 
     /**
      * 乐观锁

@@ -18,22 +18,23 @@ import java.util.List;
  * @since 2020-02-14
  */
 @RestController
+@RequestMapping("api/book/")
 public class TblBookInfoController {
 
     @Autowired
     ITblBookInfoService bookInfoService;
 
-    @GetMapping("api/book/{id}")
+    @GetMapping("{id}")
     public TblBookInfo getBookById(@PathVariable("id") Integer id){
         return bookInfoService.getById(id);
     }
 
-    @GetMapping("api/book/list/latest")
+    @GetMapping("list/latest")
     public List<TblBookInfo> getHomeBooks(){
         return bookInfoService.getHomeBooks();
     }
 
-    @GetMapping("api/book/rand5/{bid}")
+    @GetMapping("rand5/{bid}")
     public  List<TblBookInfo> getRandFiveBooks(@PathVariable("bid") Integer bid){
 
         String author = bookInfoService.getById(bid).getAuthor();

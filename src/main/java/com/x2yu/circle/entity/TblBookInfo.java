@@ -26,8 +26,8 @@ public class TblBookInfo implements Serializable {
     /**
      * 书籍id
      */
-    @TableId(value = "book_id", type = IdType.AUTO)
-    private Integer bookId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 书籍名

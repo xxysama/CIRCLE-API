@@ -11,48 +11,31 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 走马灯展示信息表
+ * 标签表 
  * </p>
  *
  * @author x2yu
- * @since 2020-02-17
+ * @since 2020-02-21
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class TblCarouselInfo implements Serializable {
+public class TblTagInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    /**
+     * 标签名
+     */
+    private String tagName;
 
     /**
-     * 标题
+     * 标签类型
      */
-    private String title;
-
-    /**
-     * 作者
-     */
-    private String author;
-
-    /**
-     * 插图
-     */
-    private String illustration;
-
-    /**
-     * 内容
-     */
-    private String content;
-
-    /**
-     * 区分书影展示
-     */
-    private String type;
+    private String tagType;
 
     /**
      * 乐观锁
