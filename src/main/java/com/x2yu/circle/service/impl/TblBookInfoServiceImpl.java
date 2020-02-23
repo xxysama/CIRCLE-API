@@ -39,4 +39,14 @@ public class TblBookInfoServiceImpl extends ServiceImpl<TblBookInfoMapper, TblBo
 
         return bookInfoMapper.getRandFiveByAuthor(author);
     }
+
+    @Override
+    public List<TblBookInfo> getBookListBySearch(String des) {
+        QueryWrapper<TblBookInfo> wrapper = new QueryWrapper<>();
+        wrapper
+                .like("book_name",des)
+                .or()
+                .like("author",des);
+        return bookInfoMapper.selectList(wrapper);
+    }
 }

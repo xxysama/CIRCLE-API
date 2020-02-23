@@ -24,4 +24,9 @@ public interface ITblBookInfoService extends IService<TblBookInfo> {
      * 根据作者随机获取书籍集合 5
      * */
     public List<TblBookInfo> getRandFiveByAuthor(String author);
+
+    /**
+     * 根据描述模糊查询
+     * */
+    public List<TblBookInfo> getBookListBySearch(String des);
 }

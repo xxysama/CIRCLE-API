@@ -5,6 +5,8 @@ import com.x2yu.circle.dto.TagsItemDto;
 import com.x2yu.circle.entity.TblTagInfo;
 import com.x2yu.circle.service.ITblTagInfoService;
 import com.x2yu.circle.service.ITblTagItemService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,7 @@ public class TblTagInfoController {
     ITblTagItemService tagItemService;
 
     @GetMapping("book/list")
+    @ApiOperation("书籍首页标签书籍获取")
     public List<TagsItemDto> getTagList(){
         List<TagsItemDto> tagsItemDtos = new ArrayList<>();
 

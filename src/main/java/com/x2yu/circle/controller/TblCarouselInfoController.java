@@ -3,6 +3,8 @@ package com.x2yu.circle.controller;
 
 import com.x2yu.circle.entity.TblCarouselInfo;
 import com.x2yu.circle.service.ITblCarouselInfoService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,8 @@ public class TblCarouselInfoController {
     ITblCarouselInfoService carouselInfoService;
 
     @GetMapping("api/carousel/book")
+    @ApiOperation("首页书籍跑马灯展示")
+//    @ApiImplicitParam(name="bid",value = "书籍id",required = true,dataType = "Integer")
     public List<TblCarouselInfo> getBookCarouselInfo(){
 
         return carouselInfoService.getBookCarouselInfo();
