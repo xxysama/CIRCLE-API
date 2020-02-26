@@ -35,10 +35,9 @@ public class TblBookInfoServiceImpl extends ServiceImpl<TblBookInfoMapper, TblBo
     }
 
     @Override
-    public List<TblBookInfo> getRandFiveByAuthor(String author) {
+    public List<TblBookInfo> getRandFiveByAuthorId(Integer bid,Integer authorId) {
 
-
-        return bookInfoMapper.getRandFiveByAuthor(author);
+        return bookInfoMapper.getRandFiveByAuthorId(bid,authorId);
     }
 
     @Override

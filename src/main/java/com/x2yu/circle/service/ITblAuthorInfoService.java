@@ -19,4 +19,9 @@ public interface ITblAuthorInfoService extends IService<TblAuthorInfo> {
      * 作者信息根据描述模糊搜索
      * */
     public List<TblAuthorInfo> getAuthorBySearch(String des);
+
+    /*
+    * 根据名字获取作者信息
+    * */
+    public TblAuthorInfo getAuthorByName(String author);
 }

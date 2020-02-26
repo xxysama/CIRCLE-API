@@ -23,6 +23,6 @@ public interface TblBookInfoMapper extends BaseMapper<TblBookInfo> {
     List<TblBookInfo> getHomeBooks();
 
 
-    @Select("select * from tbl_book_info where author = #{author} order by rand() limit 5")
-    List<TblBookInfo> getRandFiveByAuthor(@Param("author") String author);
+    @Select("select * from tbl_book_info where id not in (#{bid}) and author_id = #{authorId} order by rand() limit 5")
+    List<TblBookInfo> getRandFiveByAuthorId(@Param("bid")Integer bid,@Param("authorId") Integer authorId);
 }

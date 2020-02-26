@@ -30,4 +30,11 @@ public class TblAuthorInfoServiceImpl extends ServiceImpl<TblAuthorInfoMapper, T
 
         return authorInfoMapper.selectList(wrapper);
     }
+
+    @Override
+    public TblAuthorInfo getAuthorByName(String author) {
+        QueryWrapper<TblAuthorInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("author",author);
+        return authorInfoMapper.selectOne(wrapper);
+    }
 }

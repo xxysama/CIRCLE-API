@@ -73,15 +73,19 @@ public class TblBookInfoController {
         return bookDtos;
     }
 
-//    @GetMapping("rand5/{bid}")
-//    @ApiOperation("根据书籍id随机获取同作者的5本书籍")
-//    @ApiImplicitParam(name="bid",value = "书籍id",required = true,dataType = "Integer")
-//    public  List<TblBookInfo> getRandFiveBooks(@PathVariable("bid") Integer bid){
-//
-//        String author = bookInfoService.getById(bid).getAuthor();
-//
-//        return bookInfoService.getRandFiveByAuthor(author);
-//    }
+    @GetMapping("rand5/{bid}")
+    @ApiOperation("根据书籍id随机获取同作者的5本书籍")
+    @ApiImplicitParam(name="bid",value = "书籍id",required = true,dataType = "Integer")
+    public  List<SimpleBookDto> getRandFiveBooks(@PathVariable("bid") Integer bid){
+
+        Integer authorId = bookInfoService.getById(bid).getAuthorId();
+
+        List<TblBookInfo> bookInfos = bookInfoService.getRandFiveByAuthorId(bid,authorId);
+
+        List<SimpleBookDto> bookDtos = initSimpleBookDto(bookInfos);
+
+        return bookDtos;
+    }
 
     @GetMapping("search/{des}")
     @ApiOperation("根据输入内容模糊搜索")
