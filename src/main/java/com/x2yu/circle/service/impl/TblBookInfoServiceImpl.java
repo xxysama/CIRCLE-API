@@ -42,12 +42,12 @@ public class TblBookInfoServiceImpl extends ServiceImpl<TblBookInfoMapper, TblBo
     }
 
     @Override
-    public List<TblBookInfo> getBookListBySearch(String des) {
+    public List<TblBookInfo> getBookListBySearch(String des,Integer authorId) {
         QueryWrapper<TblBookInfo> wrapper = new QueryWrapper<>();
         wrapper
                 .like("book_name",des)
                 .or()
-                .like("author",des);
+                .eq("author_id",authorId);
         return bookInfoMapper.selectList(wrapper);
     }
 }

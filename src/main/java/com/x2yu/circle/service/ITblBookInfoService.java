@@ -30,5 +30,5 @@ public interface ITblBookInfoService extends IService<TblBookInfo> {
     /**
      * 根据描述模糊查询
      * */
-    public List<TblBookInfo> getBookListBySearch(String des);
+    public List<TblBookInfo> getBookListBySearch(String des,Integer authorId);
 }

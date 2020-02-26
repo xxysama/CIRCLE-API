@@ -55,7 +55,6 @@ public class TblBookInfoController {
         bookDto.setAuthor(authorInfo.getAuthor());
         bookDto.setAuthorIntroduction(authorInfo.getAuthorIntroduction());
 
-
         return bookDto;
     }
 
@@ -63,9 +62,47 @@ public class TblBookInfoController {
     @GetMapping("list/latest")
     @ApiOperation("获取首页最新展示书籍信息")
     public List<SimpleBookDto> getSimpleBoos(){
-        List<SimpleBookDto> bookDtos = new ArrayList<>(12);
 
         List<TblBookInfo> bookInfos = bookInfoService.getHomeBooks();
+
+        List<SimpleBookDto> bookDtos = initSimpleBookDto(bookInfos);
+
+        return bookDtos;
+    }
+
+//    @GetMapping("rand5/{bid}")
+//    @ApiOperation("根据书籍id随机获取同作者的5本书籍")
+//    @ApiImplicitParam(name="bid",value = "书籍id",required = true,dataType = "Integer")
+//    public  List<TblBookInfo> getRandFiveBooks(@PathVariable("bid") Integer bid){
+//
+//        String author = bookInfoService.getById(bid).getAuthor();
+//
+//        return bookInfoService.getRandFiveByAuthor(author);
+//    }
+
+    @GetMapping("search/{des}")
+    @ApiOperation("根据输入内容模糊搜索")
+    @ApiImplicitParam(name = "des",value = "描述",required = true,dataType = "String")
+    public List<SimpleBookDto>  getBookListBySearch(@PathVariable("des")String des){
+
+        // 根据作者名称搜索的话 先获取作者信息集合
+
+        List<TblAuthorInfo> authorInfos = authorInfoService.getAuthorBySearch(des);
+        // 初始化为0
+        Integer authorId = 0;
+        if(authorInfos.size() != 0){
+            //默认获取集合第一个id
+            authorId = authorInfos.get(0).getId();
+        }
+
+        List<SimpleBookDto> bookDtos = initSimpleBookDto(bookInfoService.getBookListBySearch(des,authorId));
+
+        return bookDtos;
+    }
+
+    // 填充BookDto数据
+    private List<SimpleBookDto> initSimpleBookDto(List<TblBookInfo> bookInfos){
+        List<SimpleBookDto> bookDtos = new ArrayList<>(12);
 
         for(TblBookInfo bookInfo:bookInfos){
             SimpleBookDto bookDto = new SimpleBookDto();
@@ -84,22 +121,5 @@ public class TblBookInfoController {
         }
 
         return bookDtos;
-    }
-
-//    @GetMapping("rand5/{bid}")
-//    @ApiOperation("根据书籍id随机获取同作者的5本书籍")
-//    @ApiImplicitParam(name="bid",value = "书籍id",required = true,dataType = "Integer")
-//    public  List<TblBookInfo> getRandFiveBooks(@PathVariable("bid") Integer bid){
-//
-//        String author = bookInfoService.getById(bid).getAuthor();
-//
-//        return bookInfoService.getRandFiveByAuthor(author);
-//    }
-
-    @GetMapping("search/{des}")
-    @ApiOperation("根据输入内容模糊搜索")
-    @ApiImplicitParam(name = "des",value = "描述",required = true,dataType = "String")
-    public List<TblBookInfo> getBookListBySearch(@PathVariable("des")String des){
-        return bookInfoService.getBookListBySearch(des);
     }
 }

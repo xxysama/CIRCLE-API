@@ -1,10 +1,14 @@
 package com.x2yu.circle.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.x2yu.circle.entity.TblAuthorInfo;
 import com.x2yu.circle.mapper.TblAuthorInfoMapper;
 import com.x2yu.circle.service.ITblAuthorInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +21,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class TblAuthorInfoServiceImpl extends ServiceImpl<TblAuthorInfoMapper, TblAuthorInfo> implements ITblAuthorInfoService {
 
+    @Autowired
+    TblAuthorInfoMapper authorInfoMapper;
+    @Override
+    public List<TblAuthorInfo> getAuthorBySearch(String des) {
+        QueryWrapper<TblAuthorInfo> wrapper = new QueryWrapper<>();
+        wrapper.like("author",des);
+
+        return authorInfoMapper.selectList(wrapper);
+    }
 }
