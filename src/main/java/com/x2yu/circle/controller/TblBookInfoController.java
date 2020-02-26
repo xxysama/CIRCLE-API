@@ -1,6 +1,9 @@
 package com.x2yu.circle.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.x2yu.circle.dto.BookPageDto;
 import com.x2yu.circle.dto.DetailsBookDto;
 import com.x2yu.circle.dto.SimpleBookDto;
 import com.x2yu.circle.entity.TblAuthorInfo;
@@ -99,6 +102,34 @@ public class TblBookInfoController {
 
         return bookDtos;
     }
+
+    @GetMapping("page/{page}")
+    @ApiOperation("分页测试")
+    @ApiImplicitParam(name = "page",value = "页码",required = true,dataType = "Integer")
+    public BookPageDto getBooksDtoByPage(@PathVariable("page")Integer current){
+
+        // 分页查询每页的数据量
+        Integer pageSize = 12;
+
+        Page<TblBookInfo> pages = new Page<>(current,pageSize);
+
+        // 获取查询分页数据
+        IPage<TblBookInfo> bookInfoIPage = bookInfoService.page(pages);
+
+        // 填充分页数据
+        List<SimpleBookDto> bookDtos = initSimpleBookDto(bookInfoIPage.getRecords());
+
+        // 填充分页数据
+        BookPageDto bookPageDto = new BookPageDto();
+        bookPageDto.setRecords(bookDtos);
+        bookPageDto.setTotal(bookInfoIPage.getTotal());
+        bookPageDto.setCurrent(bookInfoIPage.getCurrent());
+        bookPageDto.setPages(bookInfoIPage.getPages());
+
+        return bookPageDto;
+    }
+
+
 
     // 填充BookDto数据
     private List<SimpleBookDto> initSimpleBookDto(List<TblBookInfo> bookInfos){
