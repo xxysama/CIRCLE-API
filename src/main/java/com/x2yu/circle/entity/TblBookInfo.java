@@ -35,9 +35,9 @@ public class TblBookInfo implements Serializable {
     private String bookName;
 
     /**
-     * 作者
+     * 作者编号
      */
-    private String author;
+    private String authorId;
 
     /**
      * 出版社
@@ -64,10 +64,6 @@ public class TblBookInfo implements Serializable {
      */
     private String bookIntroduction;
 
-    /**
-     * 作者简介
-     */
-    private String authorIntroduction;
 
     /**
      * 评论表id字段

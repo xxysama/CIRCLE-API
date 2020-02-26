@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SimpleBookDto implements Serializable {
+public class DetailsBookDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +35,11 @@ public class SimpleBookDto implements Serializable {
      * 作者姓名
      */
     private String author;
+
+    /**
+     * 作者简介
+     */
+    private String authorIntroduction;
 
 
     /**
@@ -56,4 +61,11 @@ public class SimpleBookDto implements Serializable {
      * 出版时间
      */
     private String publishTime;
+
+    /**
+     * 国际标准书号
+     */
+    private String isbn;
+
+    
 }

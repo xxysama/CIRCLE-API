@@ -2,6 +2,7 @@ package com.x2yu.circle.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.x2yu.circle.dto.SimpleBookDto;
 import com.x2yu.circle.entity.TblBookInfo;
 import com.x2yu.circle.mapper.TblBookInfoMapper;
 import com.x2yu.circle.service.ITblBookInfoService;
