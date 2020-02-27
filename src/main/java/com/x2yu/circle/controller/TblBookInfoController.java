@@ -1,6 +1,7 @@
 package com.x2yu.circle.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.x2yu.circle.dto.BookPageDto;
@@ -8,8 +9,10 @@ import com.x2yu.circle.dto.DetailsBookDto;
 import com.x2yu.circle.dto.SimpleBookDto;
 import com.x2yu.circle.entity.TblAuthorInfo;
 import com.x2yu.circle.entity.TblBookInfo;
+import com.x2yu.circle.entity.TblBookTag;
 import com.x2yu.circle.service.ITblAuthorInfoService;
 import com.x2yu.circle.service.ITblBookInfoService;
+import com.x2yu.circle.service.ITblBookTagService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,8 @@ public class TblBookInfoController {
     ITblBookInfoService bookInfoService;
     @Autowired
     ITblAuthorInfoService authorInfoService;
+    @Autowired
+    ITblBookTagService bookTagService;
 
     @GetMapping("{id}")
     @ApiOperation("根据id获取书籍信息")
@@ -124,13 +129,41 @@ public class TblBookInfoController {
         List<SimpleBookDto> bookDtos = initSimpleBookDto(bookInfoIPage.getRecords());
 
         // 填充分页数据
-        BookPageDto bookPageDto = new BookPageDto();
-        bookPageDto.setRecords(bookDtos);
-        bookPageDto.setTotal(bookInfoIPage.getTotal());
-        bookPageDto.setCurrent(bookInfoIPage.getCurrent());
-        bookPageDto.setPages(bookInfoIPage.getPages());
+        BookPageDto bookPageDto = initPageData(bookInfoIPage,bookDtos);
 
         return bookPageDto;
+    }
+
+    @GetMapping("tag/{tid}/{page}")
+    @ApiOperation("根据标签分页查询书籍信息")
+    @ApiImplicitParam(name = "tid",value = "标签",required = true,dataType = "Integer")
+    public  BookPageDto getBookDtoByTag(@PathVariable("tid")Integer tid,@PathVariable("page") Integer page){
+        // 根据标签id 查询书籍id集合
+        Integer pageSize = 12; // 每页12个数据
+        Integer current = page;// 默认第一页
+
+        Page<TblBookTag> pages = new Page<>(current,pageSize);
+        QueryWrapper<TblBookTag> wrapper = new QueryWrapper();
+        wrapper.eq("tid",tid);
+
+        // 分页查询
+        IPage<TblBookTag> bookTagPage = bookTagService.page(pages,wrapper);
+
+        // 获取书籍id集合
+        List<TblBookTag> bookTags = bookTagPage.getRecords();
+
+        List<Integer> bidList = new ArrayList<>();
+        for(TblBookTag bookTag: bookTags){
+            bidList.add(bookTag.getBid());
+        }
+
+        // 填充分页数据
+        List<SimpleBookDto> bookDtos  = initSimpleBookDto(bookInfoService.listByIds(bidList));
+
+        // 填充分页数据
+        BookPageDto bookPageDto = initPageData(bookTagPage,bookDtos);
+
+        return  bookPageDto;
     }
 
 
@@ -157,4 +190,18 @@ public class TblBookInfoController {
 
         return bookDtos;
     }
+
+    // 填充分页数据
+    private BookPageDto initPageData(IPage iPage,List<SimpleBookDto> bookDtos){
+        // 填充分页数据
+        BookPageDto bookPageDto = new BookPageDto();
+        bookPageDto.setRecords(bookDtos);
+        bookPageDto.setTotal(iPage.getTotal());
+        bookPageDto.setCurrent(iPage.getCurrent());
+        bookPageDto.setPages(iPage.getPages());
+
+        return  bookPageDto;
+    }
+
+
 }
