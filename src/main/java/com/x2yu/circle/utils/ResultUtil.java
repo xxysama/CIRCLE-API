@@ -45,6 +45,8 @@ public class ResultUtil {
     public static Result customResultParam(String code, String msg) {
         return new Result(code, msg);
     }
+
+
     /**
      * 数据库错误
      */
@@ -82,6 +84,16 @@ public class ResultUtil {
     }
 
     /*
+     * 登录成功返回登录用户id
+     * */
+    public static Result loginSuccess(Integer uid){
+        Result result =    new Result(ResultEnum.LOGIN_SUCCESS.getCode(),ResultEnum.LOGIN_SUCCESS.getMessage());
+        result.setData(uid);
+        return result;
+    }
+
+
+    /*
      * 错误账号
      * */
     public static Result unknownAccount(){
@@ -100,6 +112,11 @@ public class ResultUtil {
      * */
     public static Result logoutSuccess(){
         return new Result(ResultEnum.LOGOUT_SUCCESS.getCode(),ResultEnum.LOGOUT_SUCCESS.getMessage());
+    }
+
+
+    public static Result submitError(){
+        return new Result(ResultEnum.SUBMIT_ERROE.getCode(),ResultEnum.SUBMIT_ERROE.getMessage());
     }
     /**
      * @param @param  code

@@ -29,8 +29,9 @@ public enum ResultEnum {
 
     INCORRECT_PASS_ERROR("402","密码错误"),
 
-    LOGOUT_SUCCESS("403","成功登出");
+    LOGOUT_SUCCESS("403","成功登出"),
 
+    SUBMIT_ERROE("501","提交失败");
 
     private String code;
     private String message;

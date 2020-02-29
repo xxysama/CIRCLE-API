@@ -1,6 +1,7 @@
 package com.x2yu.circle.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.x2yu.circle.entity.SecPermission;
 import com.x2yu.circle.entity.SecRole;
 import com.x2yu.circle.entity.SecUser;
 import com.x2yu.circle.entity.SecUserRole;
@@ -45,10 +46,13 @@ public class LoginController {
         //封装用户登录数据
         UsernamePasswordToken token =new UsernamePasswordToken(user.getUserName(),user.getPassword());
 
+        Integer uid = userService.getUserByName(user.getUserName()).getUserId();
+
         try {
             //执行登录
             subject.login(token);
-            return ResultUtil.loginSuccess();
+            // f返回登录成功信息和用户id
+            return ResultUtil.loginSuccess(uid);
         } catch (UnknownAccountException e) {
             // 错误账号
             return ResultUtil.unknownAccount();
