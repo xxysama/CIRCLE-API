@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITblCommentsReplyService extends IService<TblCommentsReply> {
 
+    /**
+     * 评论条数
+     * */
+    public Integer countReply(Integer commentId);
 }

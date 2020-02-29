@@ -116,7 +116,7 @@ public class ResultUtil {
 
 
     public static Result submitError(){
-        return new Result(ResultEnum.SUBMIT_ERROE.getCode(),ResultEnum.SUBMIT_ERROE.getMessage());
+        return new Result(ResultEnum.SUBMIT_ERROR.getCode(),ResultEnum.SUBMIT_ERROR.getMessage());
     }
     /**
      * @param @param  code

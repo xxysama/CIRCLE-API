@@ -31,7 +31,7 @@ public enum ResultEnum {
 
     LOGOUT_SUCCESS("403","成功登出"),
 
-    SUBMIT_ERROE("501","提交失败");
+    SUBMIT_ERROR("501","提交失败");
 
     private String code;
     private String message;
