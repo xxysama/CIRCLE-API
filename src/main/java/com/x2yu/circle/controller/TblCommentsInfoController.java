@@ -97,6 +97,7 @@ public class TblCommentsInfoController {
                 // 获取评论用户
                 SecUser user = userService.getById(commentsInfo.getFromUid());
                 // 获取评论条数
+
                 Integer replyCount = commentsReplyService.countReply(commentsInfo.getId());
 
                 CommentsDto commentsDto = new CommentsDto();
@@ -104,7 +105,6 @@ public class TblCommentsInfoController {
                 commentsDto.setUid(user.getUserId());
                 commentsDto.setUserName(user.getUserName());
                 // 头像初始化在这
-
                 commentsDto.setCid(commentsInfo.getId());
                 commentsDto.setLikeNum(commentsInfo.getLikeNum());
                 commentsDto.setCommentsTime(commentsInfo.getCreatedTime());
