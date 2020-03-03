@@ -10,55 +10,49 @@ import java.time.LocalDateTime;
 
 /**
  * @Author: x2yu
- * @Date: 2020/2/29 18:35
+ * @Date: 2020/3/3 15:35
  * @Describe：
  */
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class CommentsDto  implements Serializable {
+public class CommentsReplyDto  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 评论id
-     * */
-    private Integer cid;
-    /**
-     * 用户id
+     * 回复用户id
      */
-    private Integer uid;
+    private Integer fromUid;
+
 
     /**
-     * 用户名
+     * 目标用户id
      */
-    private String userName;
+    private Integer toUid;
 
     /**
-     * 用户头像
+     * 回复用户名
      */
-    private String userAvatar;
+    private String fromUserName;
 
     /**
-     * 点赞数
+     * 目标用户名
      */
-    private Integer likeNum;
+    private String toUserName;
+
 
     /**
-     * 短评内容
+     * 回复内容
      */
     private String content;
 
     /**
-     * 评论时间
+     * 回复时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime commentsTime;
+    private LocalDateTime replyTime;
 
-    /**
-     * 回复条数
-     */
-    private Integer replyCount;
 
 }

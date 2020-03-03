@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author: x2yu
  * @Date: 2020/2/7 14:54
@@ -76,13 +78,18 @@ public class LoginController {
             //先查询是否注册过 然后注册
             while(userService.existUser(secUser)){
                 System.out.println("没有注册过！");
+                // 注册到用户表
                 userService.save(secUser);
 
                 SecUserRole secUserRole = new SecUserRole();
                 secUserRole.setRoleId(1);//默认注册为普通用户
+
                 QueryWrapper<SecUser> queryWrapper = new QueryWrapper<>();
-                queryWrapper.ge("email",secUser.getEmail());
+                queryWrapper.eq("email",secUser.getEmail());
+
+                // 获得用户唯一编号
                 int userId = userService.getOne(queryWrapper).getUserId();
+
                 secUserRole.setUserId(userId);
 
                 userRoleService.save(secUserRole);

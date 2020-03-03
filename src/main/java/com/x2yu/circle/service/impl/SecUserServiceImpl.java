@@ -50,7 +50,7 @@ public class SecUserServiceImpl extends ServiceImpl<SecUserMapper, SecUser> impl
     @Override
     public SecUser getUserByName(String username) {
         QueryWrapper<SecUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ge("user_name",username);
+        queryWrapper.eq("user_name",username);
 
         return userMapper.selectOne(queryWrapper);
     }

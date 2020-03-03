@@ -83,6 +83,8 @@ public class TblCommentsInfoController {
         }
     }
 
+
+
     // 填充数据
     private List<CommentsDto> iniComment(List<TblCommentsInfo> commentsInfos){
 
@@ -103,6 +105,7 @@ public class TblCommentsInfoController {
                 commentsDto.setUserName(user.getUserName());
                 // 头像初始化在这
 
+                commentsDto.setCid(commentsInfo.getId());
                 commentsDto.setLikeNum(commentsInfo.getLikeNum());
                 commentsDto.setCommentsTime(commentsInfo.getCreatedTime());
                 commentsDto.setContent(commentsInfo.getContent());
