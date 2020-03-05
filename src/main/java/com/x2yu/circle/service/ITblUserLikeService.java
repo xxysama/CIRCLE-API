@@ -18,4 +18,9 @@ public interface ITblUserLikeService extends IService<TblUserLike> {
     public boolean existUserBookLike(Integer commentId, Integer userId);
 
     public TblUserLike getOneByDes(TblUserLike userLike);
+
+    /*
+     *获取某一评论点赞数量
+      *  */
+    public  Integer getBookCommentsLikeNum(Integer commentId);
 }

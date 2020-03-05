@@ -4,6 +4,8 @@ package com.x2yu.circle.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.x2yu.circle.entity.TblUserLike;
 import com.x2yu.circle.service.ITblUserLikeService;
+import com.x2yu.circle.utils.Result;
+import com.x2yu.circle.utils.ResultUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,30 +26,39 @@ public class TblUserLikeController {
     @Autowired
     ITblUserLikeService likeService;
 
-    @PutMapping("/bookComment")
+    @PutMapping("bookComment")
     @ApiOperation("更新点赞人数")
-    public void updateBookLikeNum(@RequestBody TblUserLike userLike){
+    public Result updateBookLikeNum(@RequestBody TblUserLike userLike){
+
+        Boolean likeState;
+        try {
+            // 如果已经点赞过了
+            if(likeService.existUserBookLike(userLike.getLikeId(),userLike.getUid())){
 
 
-        // 如果已经点赞过了
-        if(likeService.existUserBookLike(userLike.getLikeId(),userLike.getUid())){
+                // 先查询本体
+                TblUserLike tblUserLike = likeService.getOneByDes(userLike);
 
+                // 点赞状态取反
+                tblUserLike.setIsvalid(!tblUserLike.getIsvalid());
 
-            // 先查询本体
-            TblUserLike tblUserLike = likeService.getOneByDes(userLike);
+                likeState = tblUserLike.getIsvalid();
+                // 更新
+                likeService.updateById(tblUserLike);
+            }else {
+                // 第一次点赞
+                userLike.setLikeType("book");
+                userLike.setIsvalid(true);
 
-            tblUserLike.setIsvalid(!tblUserLike.getIsvalid());
+                likeState = userLike.getIsvalid();
 
-            // 更新
-            likeService.updateById(tblUserLike);
-        }else {
-            // 第一次点赞
-            userLike.setLikeType("book");
-            userLike.setIsvalid(true);
-
-            likeService.save(userLike);
+                likeService.save(userLike);
+            }
+            return ResultUtil.success(likeState);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.submitError();
         }
-
     }
 
 //    @GetMapping("getBook")

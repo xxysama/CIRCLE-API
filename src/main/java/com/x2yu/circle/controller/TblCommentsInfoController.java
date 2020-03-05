@@ -6,9 +6,11 @@ import com.x2yu.circle.dto.CommentsDto;
 import com.x2yu.circle.entity.SecUser;
 import com.x2yu.circle.entity.TblCommentsInfo;
 import com.x2yu.circle.entity.TblCommentsReply;
+import com.x2yu.circle.entity.TblUserLike;
 import com.x2yu.circle.service.ISecUserService;
 import com.x2yu.circle.service.ITblCommentsInfoService;
 import com.x2yu.circle.service.ITblCommentsReplyService;
+import com.x2yu.circle.service.ITblUserLikeService;
 import com.x2yu.circle.utils.Result;
 import com.x2yu.circle.utils.ResultUtil;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,6 +39,8 @@ public class TblCommentsInfoController {
     ITblCommentsReplyService commentsReplyService;
     @Autowired
     ISecUserService userService;
+    @Autowired
+    ITblUserLikeService likeService;
 
     @GetMapping("book/{bid}")
     @ApiOperation("获取指定书籍评论")
@@ -48,8 +52,15 @@ public class TblCommentsInfoController {
                 .eq("topic_id",bid)
                 .eq("topic_type","book");
 
-        List<TblCommentsInfo> commentsInfos =  commentsInfoService.list(wrapper);
 
+
+        List<TblCommentsInfo> comments =  commentsInfoService.list(wrapper);
+
+        // 初始化评论点赞数
+        iniCommentLikeNum(comments);
+
+        // 再次查询
+        List<TblCommentsInfo> commentsInfos =  commentsInfoService.list(wrapper);
 
         return iniComment(commentsInfos);
 
@@ -83,6 +94,15 @@ public class TblCommentsInfoController {
         }
     }
 
+    // 填充点赞人数数据
+    private void iniCommentLikeNum(List<TblCommentsInfo> commentsInfos){
+
+        for(TblCommentsInfo commentsInfo : commentsInfos){
+            commentsInfo.setLikeNum(likeService.getBookCommentsLikeNum(commentsInfo.getId()));
+            // 更新数据
+            commentsInfoService.updateById(commentsInfo);
+        }
+    }
 
 
     // 填充数据
@@ -99,6 +119,10 @@ public class TblCommentsInfoController {
                 // 获取评论条数
 
                 Integer replyCount = commentsReplyService.countReply(commentsInfo.getId());
+
+
+                // 获取每条评论点赞
+                likeService.getBookCommentsLikeNum(commentsInfo.getId());
 
                 CommentsDto commentsDto = new CommentsDto();
 

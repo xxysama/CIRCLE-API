@@ -45,4 +45,13 @@ public class TblUserLikeServiceImpl extends ServiceImpl<TblUserLikeMapper, TblUs
                 .eq("uid",userLike.getUid());
         return likeMapper.selectOne(wrapper);
     }
+
+    @Override
+    public Integer getBookCommentsLikeNum(Integer commentId) {
+        QueryWrapper<TblUserLike> wrapper = new QueryWrapper();
+        wrapper.eq("like_id",commentId)
+                .eq("like_type","book")
+                .eq("isvalid",true);
+        return likeMapper.selectCount(wrapper);
+    }
 }
