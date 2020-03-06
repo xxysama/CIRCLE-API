@@ -89,6 +89,7 @@ public class LoginController {
             String encodedPassword = new SimpleHash("md5",secUser.getPassword(),salt,times).toString();
             secUser.setPassword(encodedPassword);
             secUser.setSalt(salt);
+            secUser.setActive(true);
             //先查询是否注册过 然后注册
             while(userService.existUser(secUser)){
                 System.out.println("没有注册过！");

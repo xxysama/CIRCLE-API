@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -53,7 +55,7 @@ public class SecUser implements Serializable {
     /**
      * 锁定用户
      */
-    private Boolean locked;
+    private Boolean active;
 
     /**
      * 乐观锁
@@ -63,6 +65,7 @@ public class SecUser implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
     /**
@@ -73,6 +76,7 @@ public class SecUser implements Serializable {
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedTime;
 
 
