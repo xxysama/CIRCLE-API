@@ -7,6 +7,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -36,14 +37,20 @@ public class UserRealm extends AuthorizingRealm {
 
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 
+        String username = token.getUsername();
         //链接查询数据库用户
-        SecUser user = userService.getUserByName(token.getUsername());
+        SecUser user = userService.getUserByName(username);
 
         if(user == null ){
             return null;
         }
 
+        String passwordInDB = user.getPassword();
+        String salt = user.getSalt();
+
+        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username,passwordInDB, ByteSource.Util.bytes(salt),getName());
+
         //密码认证
-        return new SimpleAuthenticationInfo("",user.getPassword(),"");
+        return simpleAuthenticationInfo;
     }
 }

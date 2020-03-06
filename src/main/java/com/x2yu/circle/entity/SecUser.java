@@ -34,6 +34,12 @@ public class SecUser implements Serializable {
      */
     private String userName;
 
+
+    /**
+     * 盐值
+     */
+    private String salt;
+
     /**
      * 用户密码
      */

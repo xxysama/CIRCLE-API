@@ -14,6 +14,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,7 +76,19 @@ public class LoginController {
             while (userService.existUsername(secUser)){
                 return ResultUtil.registerUsernameError();
             }
+            // 先打印一下密码
+            System.out.println("密码是："+ secUser.getPassword());
 
+            // 生成盐，默认长度为16
+            String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+
+            // 设置hash迭代次数
+            int times =2;
+
+            //得到Hash 后的密码
+            String encodedPassword = new SimpleHash("md5",secUser.getPassword(),salt,times).toString();
+            secUser.setPassword(encodedPassword);
+            secUser.setSalt(salt);
             //先查询是否注册过 然后注册
             while(userService.existUser(secUser)){
                 System.out.println("没有注册过！");
