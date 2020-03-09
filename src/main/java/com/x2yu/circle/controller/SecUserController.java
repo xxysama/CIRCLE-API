@@ -54,6 +54,20 @@ public class SecUserController {
         return userIPage;
     }
 
+    @PostMapping("search/{page}")
+    @ApiOperation("搜索获取用户列表")
+    public IPage<SecUser> searchUserByDes(@RequestBody SecUser user,@PathVariable("page")Integer page){
+
+        Integer pageSize = 5;
+        Page<SecUser> userPage = new Page<>(page,pageSize);
+
+        IPage<SecUser> userIPage = userService.searchUserByDes(user,page);
+
+        return userIPage;
+
+    }
+
+
     @PutMapping("active")
     @ApiOperation("改变用户状态")
     public Result changeUserActive(@RequestBody SecUser user){

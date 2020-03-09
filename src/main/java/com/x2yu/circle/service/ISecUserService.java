@@ -1,5 +1,6 @@
 package com.x2yu.circle.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.x2yu.circle.entity.SecUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,4 +24,7 @@ public interface ISecUserService extends IService<SecUser> {
 
     //根据用户名获取用户
     public SecUser getUserByName(String username);
+
+    //更具搜索条件分页
+    public IPage<SecUser> searchUserByDes(SecUser user,Integer page);
 }
