@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISecUserRoleService extends IService<SecUserRole> {
 
+    /*
+     *删除用户关系 uid为参数
+     * */
+    public void deleteUserRelByUid(Integer uid);
 }

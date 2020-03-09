@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.x2yu.circle.entity.SecUser;
 import com.x2yu.circle.entity.TblUserLike;
+import com.x2yu.circle.service.ISecUserRoleService;
 import com.x2yu.circle.service.ISecUserService;
 import com.x2yu.circle.utils.Result;
 import com.x2yu.circle.utils.ResultUtil;
@@ -29,6 +30,8 @@ public class SecUserController {
 
     @Autowired
     ISecUserService userService;
+    @Autowired
+    ISecUserRoleService userRoleService;
 
     @GetMapping("list")
     @ApiOperation("获取用户列表")
@@ -58,6 +61,38 @@ public class SecUserController {
         try {
             user = userService.getById(uid);
             user.setActive(!user.getActive());
+            userService.updateById(user);
+            return ResultUtil.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.submitError();
+        }
+
+    }
+
+    @DeleteMapping("delete")
+    @ApiOperation("注销指定用户")
+    public Result deleteUserById(@RequestBody SecUser user){
+        Integer uid = user.getUserId();
+        try {
+            // 先删除关联表信息
+            userRoleService.deleteUserRelByUid(uid);
+            // 删除主表信息
+            userService.removeById(uid);
+            return ResultUtil.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.submitError();
+        }
+    }
+
+    @PutMapping("update")
+    @ApiOperation("更新用户资料")
+    public Result updateUserInfo(@RequestBody SecUser user){
+
+        // 查询用户信息
+
+        try {
             userService.updateById(user);
             return ResultUtil.success();
         } catch (Exception e) {
