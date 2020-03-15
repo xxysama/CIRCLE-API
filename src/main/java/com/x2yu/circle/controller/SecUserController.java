@@ -124,40 +124,44 @@ public class SecUserController {
 
     }
 
-    @PutMapping("user/passReset")
+    @PutMapping("passReset")
     @ApiOperation("重置密码")
     public Result passReset(@RequestBody UserInfoResetDto userInfoResetDto){
 
-        UsernamePasswordToken token =new UsernamePasswordToken(userInfoResetDto.getUserName(),userInfoResetDto.getOldPass());
-        //Shiro获取当前用户
-        Subject subject = SecurityUtils.getSubject();
-
-        // 先验证是否能够登录
         try {
-            //执行登录
-            subject.login(token);
+            //执行获取旧密码
+
             // 验证通过证明旧密码正确
             SecUser user = userService.getById(userInfoResetDto.getUserId());
 
-            // 生成盐，默认长度为16
-            String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+            String oldSalt = user.getSalt();
+            // 默认迭代两次 计算用户输入的密码
+            String inputOldPass = new SimpleHash("md5",userInfoResetDto.getOldPass(),oldSalt,2).toString();
+            String oldPass = user.getPassword();
 
-            // 设置hash迭代次数
-            int times =2;
+            // 比较是否与旧密码相等
+            if(oldPass.equals(inputOldPass)){
+                // 验证通过进行修改
+                // 生成盐，默认长度为16
+                String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+                // 设置hash迭代次数
+                int times =2;
 
-            //得到Hash 后的密码
-            String encodedPassword = new SimpleHash("md5",userInfoResetDto.getNewPass(),salt,times).toString();
+                //得到Hash 后的密码
+                String encodedPassword = new SimpleHash("md5",userInfoResetDto.getNewPass(),salt,times).toString();
+                user.setPassword(encodedPassword);
+                user.setSalt(salt);
 
-            user.setPassword(encodedPassword);
-            user.setSalt(salt);
+                userService.updateById(user);
+                return ResultUtil.success();
+            }else{
+                return ResultUtil.incorrectPass();
+            }
 
-            userService.updateById(user);
 
-            return ResultUtil.success();
-
-        }  catch ( IncorrectCredentialsException ice) {
-            // 密码错误
-            return ResultUtil.incorrectPass();
+        }  catch ( Exception e) {
+            // 提交错误
+            return ResultUtil.submitError();
         }
 
 
