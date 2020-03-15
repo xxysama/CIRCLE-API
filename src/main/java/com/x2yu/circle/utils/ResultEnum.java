@@ -57,7 +57,4 @@ public enum ResultEnum {
         this.message = message;
     }
 
-
-
-
 }

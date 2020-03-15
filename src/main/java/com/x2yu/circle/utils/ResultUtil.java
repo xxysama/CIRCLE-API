@@ -114,9 +114,17 @@ public class ResultUtil {
         return new Result(ResultEnum.LOGOUT_SUCCESS.getCode(),ResultEnum.LOGOUT_SUCCESS.getMessage());
     }
 
-
+    /**
+     * 提交错误
+     * */
     public static Result submitError(){
         return new Result(ResultEnum.SUBMIT_ERROR.getCode(),ResultEnum.SUBMIT_ERROR.getMessage());
+    }
+
+    public static Result submitError(Object object){
+        Result result = new Result(ResultEnum.SUBMIT_ERROR.getCode(),ResultEnum.SUBMIT_ERROR.getMessage());
+        result.setData(object);
+        return result;
     }
     /**
      * @param @param  code

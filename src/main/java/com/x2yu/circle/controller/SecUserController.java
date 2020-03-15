@@ -22,6 +22,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -113,15 +115,30 @@ public class SecUserController {
     public Result updateUserInfo(@RequestBody SecUser user){
 
         // 查询用户信息
+         SecUser oldUser = userService.getById(user.getUserId());
 
-        try {
-            userService.updateById(user);
-            return ResultUtil.success();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.submitError();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime start = oldUser.getUpdatedTime();
+        Duration duration = Duration.between(start,now);
+        long days = duration.toDays(); //相差的天数
+
+        // 30天内只能更新一次
+        if(days >= 30){
+            try {
+                oldUser.setUserName(user.getUserName());
+                String email = user.getEmail()==null || user.getEmail().length() <=0  ? oldUser.getEmail(): user.getEmail();
+                oldUser.setEmail(email);
+
+                userService.updateById(oldUser);
+                return ResultUtil.success();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResultUtil.submitError();
+            }
+        }else {
+            String  msg = (30-days)+"日后可修改昵称";
+            return ResultUtil.submitError(msg);
         }
-
     }
 
     @PutMapping("passReset")
