@@ -7,14 +7,12 @@ import com.x2yu.circle.entity.SecUser;
 import com.x2yu.circle.entity.TblCommentsReply;
 import com.x2yu.circle.service.ISecUserService;
 import com.x2yu.circle.service.ITblCommentsReplyService;
+import com.x2yu.circle.utils.Result;
+import com.x2yu.circle.utils.ResultUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +48,19 @@ public class TblCommentsReplyController {
     }
 
 
+    @PutMapping("submitReply")
+    @ApiOperation("提交评论回复")
+    public Result submitCommentsReply (@RequestBody TblCommentsReply commentsReply){
+        System.out.println(commentsReply.toString());
+        try {
+            replyService.save(commentsReply);
+            return ResultUtil.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.submitError();
+        }
+    }
+
     private List<CommentsReplyDto> iniCommentsReply(List<TblCommentsReply> commentsReplyList){
 
         List<CommentsReplyDto> commentsReplyDtos = new ArrayList<>();
@@ -58,6 +69,8 @@ public class TblCommentsReplyController {
             CommentsReplyDto replyDto = new CommentsReplyDto();
 
             SecUser fromUser = userService.getById(commentsReply.getFromUid());
+            replyDto.setReplyId(commentsReply.getId());
+            replyDto.setCommentId(commentsReply.getCommentId());
             replyDto.setFromUid(commentsReply.getFromUid());
             replyDto.setFromUserName(fromUser.getUserName());
 
