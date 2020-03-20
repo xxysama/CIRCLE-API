@@ -22,7 +22,7 @@ public class CommentsReplyDto  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 评论id
+     * 评论主键id
      * */
     private Integer replyId;
 

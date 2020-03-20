@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -43,6 +45,17 @@ public class TblCommentsReplyController {
         wrapper.eq("reply_id",commentId);
 
         List<TblCommentsReply> commentsReplyList = replyService.list(wrapper);
+
+        // 获取评论中针对回复得二次以及多次回复
+        Map<String,Object> replyMap = new HashMap<>();
+        for(TblCommentsReply commentsReply: commentsReplyList){
+            replyMap.put("reply_id",commentsReply.getId());
+        }
+
+        List<TblCommentsReply> commentsReplyListSub = replyService.listByMap(replyMap);
+
+        commentsReplyList.addAll(commentsReplyListSub);
+
 
         return iniCommentsReply(commentsReplyList);
     }
