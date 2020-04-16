@@ -34,4 +34,13 @@ public class TblCircleInfoServiceImpl extends ServiceImpl<TblCircleInfoMapper, T
 
         return circleInfoMapper.selectList(queryWrapper);
     }
+
+    @Override
+    public List<TblCircleInfo> getTopicCircleInfo() {
+
+        QueryWrapper<TblCircleInfo> queryWrapper = new QueryWrapper();
+        queryWrapper.orderByDesc("hot")
+                .last("limit 3");
+        return circleInfoMapper.selectList(queryWrapper);
+    }
 }

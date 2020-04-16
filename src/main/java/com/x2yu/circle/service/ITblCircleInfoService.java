@@ -21,5 +21,9 @@ public interface ITblCircleInfoService extends IService<TblCircleInfo> {
      */
     public List<TblCircleInfo> getTopCircleInfo(Integer cid);
 
-
+    /***
+     * 获取最热门展示小组信息
+     * @return
+     */
+    public List<TblCircleInfo> getTopicCircleInfo();
 }
