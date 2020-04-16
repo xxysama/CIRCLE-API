@@ -62,9 +62,9 @@ public class TblCircleInfo implements Serializable {
     private Integer revision;
 
     /**
-     * 是否置顶显示
+     * 圈子热度
      */
-    private Boolean istop;
+    private Integer hot;
 
     /**
      * 创建时间
