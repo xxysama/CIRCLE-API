@@ -1,5 +1,10 @@
 package com.x2yu.circle.dto;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +12,11 @@ import java.util.List;
  * @Date: 2020/4/20 22:56
  * @Describe：
  */
-public class TopicPageDto {
+
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class TopicPageDto implements Serializable {
 
     /**
      * 分页书籍数据

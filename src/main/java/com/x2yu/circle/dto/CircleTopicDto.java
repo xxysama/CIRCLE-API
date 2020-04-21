@@ -1,5 +1,7 @@
 package com.x2yu.circle.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -19,6 +21,11 @@ public class CircleTopicDto implements Serializable {
 
 
     /**
+     * 话题id
+     */
+    private Integer topicId;
+
+    /**
      * 话题标题
      */
     private String topicTitle;
@@ -31,7 +38,7 @@ public class CircleTopicDto implements Serializable {
     /**
      * 话题作者名称
      */
-    private Integer authorName;
+    private String authorName;
 
     /**
      * 话题内容
@@ -46,11 +53,13 @@ public class CircleTopicDto implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
 }

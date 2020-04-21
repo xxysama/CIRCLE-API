@@ -1,5 +1,6 @@
 package com.x2yu.circle.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.x2yu.circle.entity.TblCircleTopic;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-04-20
  */
 public interface ITblCircleTopicService extends IService<TblCircleTopic> {
+
 
 }
