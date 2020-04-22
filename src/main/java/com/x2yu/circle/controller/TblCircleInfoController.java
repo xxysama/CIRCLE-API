@@ -68,6 +68,15 @@ public class TblCircleInfoController {
         return circleInfoDtos;
     }
 
+
+    @GetMapping("{cid}")
+    @ApiOperation("根据圈子id获取圈子信息")
+    @ApiImplicitParam(name="cid",value = "圈子id",required = true,dataType = "Integer")
+    public TblCircleInfo getCircleinfobyCid(@PathVariable("cid") Integer cid){
+        return circleInfoService.getById(cid);
+    }
+
+
     @GetMapping("topic")
     @ApiOperation("获取最热门小组信息")
     public List<CircleSimpleInfoDto> getTopicCircleInfo(){
