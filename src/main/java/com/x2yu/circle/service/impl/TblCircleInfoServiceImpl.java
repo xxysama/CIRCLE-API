@@ -63,4 +63,10 @@ public class TblCircleInfoServiceImpl extends ServiceImpl<TblCircleInfoMapper, T
         circleInfoMapper.updateById(circleInfo);
 
     }
+
+    @Override
+    public List<TblCircleInfo> getRandomCircleInfo() {
+
+        return circleInfoMapper.getRandomCircleInfo();
+    }
 }

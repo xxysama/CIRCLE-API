@@ -84,6 +84,13 @@ public class TblCircleInfoController {
         return  intiCircleSimpleInfo(circleInfoService.getTopicCircleInfo());
     }
 
+    @GetMapping("random")
+    @ApiOperation("随机小组获取数据")
+    public List<CircleSimpleInfoDto> getRandomCircleInfo(){
+
+        return intiCircleSimpleInfo(circleInfoService.getRandomCircleInfo());
+    }
+
     // 填充CircleInfoDto数据
 
 

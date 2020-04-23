@@ -31,4 +31,9 @@ public interface ITblCircleInfoService extends IService<TblCircleInfo> {
      * 更新圈子小组人数
      * */
     public void flashCircleMember(Integer circleId);
+
+    /**
+     * 随机小组获取
+     * */
+    public List<TblCircleInfo> getRandomCircleInfo();
 }
