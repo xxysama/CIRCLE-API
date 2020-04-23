@@ -60,6 +60,8 @@ public class TblCircleTopicController {
     @ApiImplicitParam(name = "page",value = "页码",required = true,dataType = "Integer")
     public TopicPageDto getCircleTopicByPage(@PathVariable("cid")Integer cid, @PathVariable("page") Integer page){
 
+        TopicPageDto topicPageDto = new TopicPageDto();
+
         Integer pageSize = 12; // 每页12个数据
         Integer current = page;// 默认第一页
 
@@ -69,17 +71,18 @@ public class TblCircleTopicController {
         // 分页查询圈子话题关系对象集合
         IPage<TblCircleTopic> circleTopicIPage = circleTopicService.page(pages,wrapper);
 
+        while(!circleTopicIPage.getRecords().isEmpty()){
+            // 获取书籍id集合
+            List<TblCircleTopic> circleTopics = circleTopicIPage.getRecords();
+            // java8使用流获取话筒id集合
+            List<Integer> ids = circleTopics.stream().map(p -> p.getTopicId()).collect(Collectors.toList());
 
-        // 获取书籍id集合
-        List<TblCircleTopic> circleTopics = circleTopicIPage.getRecords();
-        // java8使用流获取话筒id集合
-        List<Integer> ids = circleTopics.stream().map(p -> p.getTopicId()).collect(Collectors.toList());
+            //填充分页对象
+            List<CircleTopicDto> circleTopicDtos = iniCirCleTopDto(topicInfoService.listByIds(ids));
 
-        //填充分页对象
-        List<CircleTopicDto> circleTopicDtos = iniCirCleTopDto(topicInfoService.listByIds(ids));
-
-        // 填充分页数据
-        TopicPageDto topicPageDto = initTopicPageDto(circleTopicIPage,circleTopicDtos);
+            // 填充分页数据
+            topicPageDto = initTopicPageDto(circleTopicIPage,circleTopicDtos);
+        }
 
         return  topicPageDto;
     }

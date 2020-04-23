@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITblCircleMemberService extends IService<TblCircleMember> {
 
+    /**
+     * 判断当前用户是否已经加入小组
+     * */
+    public boolean alreadyApplyCircle(Integer circleId,Integer memberId);
 }
