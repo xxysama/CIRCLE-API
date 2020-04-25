@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.x2yu.circle.dto.TopicPageDto;
 import com.x2yu.circle.entity.TblCircleTopic;
+import com.x2yu.circle.entity.TblDynamicInfo;
+import com.x2yu.circle.mapper.TblDynamicInfoMapper;
 import com.x2yu.circle.service.ITblBookInfoService;
 import com.x2yu.circle.service.ITblCircleTopicService;
+import com.x2yu.circle.service.ITblDynamicInfoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +22,7 @@ class CircleApiApplicationTests {
 
     @Autowired
     ITblCircleTopicService circleTopicService;
+
     @Test
     void contextLoads() {
 

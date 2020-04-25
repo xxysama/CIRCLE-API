@@ -8,11 +8,7 @@ import com.x2yu.circle.utils.Result;
 import com.x2yu.circle.utils.ResultUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -32,7 +28,7 @@ public class TblCircleMemberController {
     ITblCircleInfoService circleInfoService;
 
 
-    @PutMapping("apply")
+    @PostMapping("apply")
     @ApiOperation("加入圈子")
     public Result applyCircle(@RequestBody TblCircleMember circleMember){
 
