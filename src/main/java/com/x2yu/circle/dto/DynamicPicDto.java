@@ -21,6 +21,6 @@ import java.util.List;
 @Accessors(chain = true)
 public class DynamicPicDto implements Serializable {
 
-    List<TblDynamicPic> dynamicPics;
+    private  List<TblDynamicPic> dynamicPics;
 
 }

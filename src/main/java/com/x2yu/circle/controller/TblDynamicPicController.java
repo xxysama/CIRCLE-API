@@ -1,7 +1,10 @@
 package com.x2yu.circle.controller;
 
 
-import com.x2yu.circle.dto.DynamicPicDto;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import com.x2yu.circle.entity.TblDynamicPic;
 import com.x2yu.circle.service.ITblDynamicPicService;
 import com.x2yu.circle.utils.Result;
@@ -10,9 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * <p>
@@ -31,10 +33,14 @@ public class TblDynamicPicController {
 
     @PostMapping("submit")
     @ApiOperation("动态中图片提交接口")
-    public Result submitDynamicPic(@RequestBody DynamicPicDto dynamicPicDto){
+    public Result submitDynamicPic(@RequestBody String tblDynamicPics){
+
+        JSONObject jsonObject = JSONObject.parseObject(tblDynamicPics);
+        JSONArray jsonArray = (JSONArray)jsonObject.get("dynamicPics");
+        List<TblDynamicPic> dynamicPics = (List<TblDynamicPic>) JSONArray.parseArray(jsonArray.toString(),TblDynamicPic.class);
 
         try {
-                dynamicPicService.saveBatch(dynamicPicDto.getDynamicPics());
+                dynamicPicService.saveBatch(dynamicPics);
                 return ResultUtil.success();
         } catch (Exception e) {
             e.printStackTrace();
