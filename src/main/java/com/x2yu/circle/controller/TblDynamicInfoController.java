@@ -6,6 +6,7 @@ import com.x2yu.circle.mapper.TblDynamicInfoMapper;
 import com.x2yu.circle.service.ITblDynamicInfoService;
 import com.x2yu.circle.utils.Result;
 import com.x2yu.circle.utils.ResultUtil;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,4 +43,11 @@ public class TblDynamicInfoController {
             return ResultUtil.submitError();
         }
     }
+
+    @GetMapping("list/")
+    @ApiOperation("滚动加载好友动态，每次加载5条")
+    public void listDynamicScroll(){
+
+    }
+
 }
