@@ -25,7 +25,7 @@ import java.util.List;
  * @since 2020-04-25
  */
 @RestController
-@RequestMapping("api/circle/dynamic/pic/")
+@RequestMapping("api/dynamic/pic/")
 public class TblDynamicPicController {
 
     @Autowired

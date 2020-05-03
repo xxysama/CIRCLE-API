@@ -1,10 +1,14 @@
 package com.x2yu.circle.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.x2yu.circle.entity.TblDynamicInfo;
 import com.x2yu.circle.mapper.TblDynamicInfoMapper;
 import com.x2yu.circle.service.ITblDynamicInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,5 +21,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class TblDynamicInfoServiceImpl extends ServiceImpl<TblDynamicInfoMapper, TblDynamicInfo> implements ITblDynamicInfoService {
 
+    @Autowired
+    TblDynamicInfoMapper dynamicInfoMapper;
 
+    @Override
+    public List<TblDynamicInfo> listDynamicScroll(List<Integer> ids, Integer index) {
+
+        QueryWrapper<TblDynamicInfo> wrapper = new QueryWrapper<>();
+        wrapper.in("user_id",ids)
+                .orderByDesc("created_time")
+                .last("limit " + index + ",5");
+
+        return dynamicInfoMapper.selectList(wrapper);
+    }
+
+    @Override
+    public Integer countDynamicByUserIds(List<Integer> ids) {
+
+        QueryWrapper<TblDynamicInfo> wrapper = new QueryWrapper<>();
+        wrapper.in("user_id",ids);
+        return  dynamicInfoMapper.selectCount(wrapper);
+    }
 }
