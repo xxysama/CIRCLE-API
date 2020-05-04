@@ -30,7 +30,7 @@ public class TblDynamicInfoServiceImpl extends ServiceImpl<TblDynamicInfoMapper,
         QueryWrapper<TblDynamicInfo> wrapper = new QueryWrapper<>();
         wrapper.in("user_id",ids)
                 .orderByDesc("created_time")
-                .last("limit " + index + ",5");
+                .last("limit " + index + ",2");
 
         return dynamicInfoMapper.selectList(wrapper);
     }

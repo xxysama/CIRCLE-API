@@ -50,7 +50,6 @@ public class TblDynamicInfoController {
             // 提交
             dynamicInfoService.save(dynamicInfo);
             // 返回动态的主键id
-
             return ResultUtil.success(dynamicInfo.getId());
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,23 +58,27 @@ public class TblDynamicInfoController {
     }
 
     @GetMapping("list/scroll")
-    @ApiOperation("滚动加载好友动态，每次加载5条")
+    @ApiOperation("滚动加载好友动态，每次加载2条")
     public List<DynamicInfoDto> listDynamicScroll(@RequestParam Integer userId, @RequestParam Integer index){
 
         // 首先获取当前用户好友id集合
         List<Integer> ids = userFollowService.getUserFollowIds(userId);
+        ids.add(userId);
+
 
         //获取动态集合
         List<TblDynamicInfo> dynamicInfos = dynamicInfoService.listDynamicScroll(ids,index);
+
 
         return initDynamicInfoDto(dynamicInfos);
     }
 
     @GetMapping("count/{userId}")
-    @ApiOperation("获取该用户好友动态总条数")
+    @ApiOperation("获取该用户好友动态总条数，加上自身动态")
     public Integer getDynamicCount(@PathVariable("userId") Integer userId){
         // 先获取好友ids
         List<Integer> ids = userFollowService.getUserFollowIds(userId);
+        ids.add(userId);
 
         return dynamicInfoService.countDynamicByUserIds(ids);
     }
@@ -83,9 +86,11 @@ public class TblDynamicInfoController {
 
     public List<DynamicInfoDto> initDynamicInfoDto(List<TblDynamicInfo> dynamicInfos){
         List<DynamicInfoDto> dynamicInfoDtos = new ArrayList<>();
-        DynamicInfoDto dynamicInfoDto = new DynamicInfoDto();
 
         dynamicInfos.forEach(dynamicInfo -> {
+
+            DynamicInfoDto dynamicInfoDto = new DynamicInfoDto();
+
             dynamicInfoDto.setDynamicId(dynamicInfo.getId());
             dynamicInfoDto.setUserName(userService.getById(dynamicInfo.getUserId()).getUserName());
             dynamicInfoDto.setContent(dynamicInfo.getContent());
