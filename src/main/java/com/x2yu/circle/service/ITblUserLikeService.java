@@ -15,7 +15,7 @@ import io.swagger.models.auth.In;
 public interface ITblUserLikeService extends IService<TblUserLike> {
 
 
-    public boolean existUserBookLike(Integer commentId, Integer userId);
+    public boolean existUserLike(TblUserLike userLike);
 
     public TblUserLike getOneByDes(TblUserLike userLike);
 
@@ -23,4 +23,10 @@ public interface ITblUserLikeService extends IService<TblUserLike> {
      *获取某一评论点赞数量
       *  */
     public  Integer getBookCommentsLikeNum(Integer commentId);
+
+    /**
+     * 获取某一动态点赞人数
+     * */
+    public Integer getDynamicLikeNUm(Integer dynamicId);
+
 }

@@ -23,12 +23,12 @@ public class TblUserLikeServiceImpl extends ServiceImpl<TblUserLikeMapper, TblUs
     TblUserLikeMapper likeMapper;
 
     @Override
-    public boolean existUserBookLike(Integer commentId, Integer userId) {
+    public boolean existUserLike(TblUserLike userLike) {
 
         QueryWrapper<TblUserLike> wrapper = new QueryWrapper();
-        wrapper.eq("like_id",commentId)
-                .eq("like_type","book")
-                .eq("uid",userId)
+        wrapper.eq("like_id",userLike.getLikeId())
+                .eq("like_type",userLike.getLikeType())
+                .eq("uid",userLike.getUid())
                 .last("limit 1");
 
         if(likeMapper.selectList(wrapper).size()!= 0){
@@ -54,4 +54,12 @@ public class TblUserLikeServiceImpl extends ServiceImpl<TblUserLikeMapper, TblUs
                 .eq("isvalid",true);
         return likeMapper.selectCount(wrapper);
     }
+
+    @Override
+    public Integer getDynamicLikeNUm(Integer dynamicId) {
+        QueryWrapper<TblUserLike> wrapper = new QueryWrapper();
+        wrapper.eq("like_id",dynamicId)
+                .eq("like_type","dynamic")
+                .eq("isvalid",true);
+        return likeMapper.selectCount(wrapper);    }
 }

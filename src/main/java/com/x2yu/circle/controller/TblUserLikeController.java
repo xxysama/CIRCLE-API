@@ -26,14 +26,14 @@ public class TblUserLikeController {
     @Autowired
     ITblUserLikeService likeService;
 
-    @PutMapping("bookComment")
+    @PutMapping("update")
     @ApiOperation("更新点赞人数")
     public Result updateBookLikeNum(@RequestBody TblUserLike userLike){
 
         Boolean likeState;
         try {
             // 如果已经点赞过了
-            if(likeService.existUserBookLike(userLike.getLikeId(),userLike.getUid())){
+            if(likeService.existUserLike(userLike)){
 
 
                 // 先查询本体
@@ -47,7 +47,6 @@ public class TblUserLikeController {
                 likeService.updateById(tblUserLike);
             }else {
                 // 第一次点赞
-                userLike.setLikeType("book");
                 userLike.setIsvalid(true);
 
                 likeState = userLike.getIsvalid();

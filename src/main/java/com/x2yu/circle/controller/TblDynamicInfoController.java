@@ -6,10 +6,7 @@ import com.x2yu.circle.entity.TblDynamicInfo;
 import com.x2yu.circle.entity.TblUserFollow;
 import com.x2yu.circle.mapper.TblDynamicInfoMapper;
 import com.x2yu.circle.mapper.TblUserFollowMapper;
-import com.x2yu.circle.service.ISecUserService;
-import com.x2yu.circle.service.ITblDynamicInfoService;
-import com.x2yu.circle.service.ITblDynamicPicService;
-import com.x2yu.circle.service.ITblUserFollowService;
+import com.x2yu.circle.service.*;
 import com.x2yu.circle.utils.Result;
 import com.x2yu.circle.utils.ResultUtil;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,6 +38,9 @@ public class TblDynamicInfoController {
     ITblDynamicPicService dynamicPicService;
     @Autowired
     ISecUserService userService;
+    @Autowired
+    ITblUserLikeService userLikeService;
+
 
     @PostMapping("submit")
     @ApiOperation("提交动态信息并且返回该条动态的主键Id给前端")
@@ -99,7 +99,7 @@ public class TblDynamicInfoController {
             //图片集合
             dynamicInfoDto.setPictureList(dynamicPicService.getDynamicPics(dynamicInfo.getId()));
 
-            dynamicInfoDto.setLikeNum(1);
+            dynamicInfoDto.setLikeNum(userLikeService.getDynamicLikeNUm(dynamicInfo.getId()));
             dynamicInfoDto.setReplyCount(1);
 
             dynamicInfoDtos.add(dynamicInfoDto);
