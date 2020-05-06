@@ -147,6 +147,18 @@ public class TblDynamicInfoController {
         }
     }
 
+    @PutMapping("update")
+    @ApiOperation("更新用户动态")
+    public Result updateDynamicInfo(@RequestBody TblDynamicInfo dynamicInfo){
+
+        try {
+            dynamicInfoService.updateById(dynamicInfo);
+            return ResultUtil.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.submitError();
+        }
+    }
 
 
     public List<DynamicInfoDto> initDynamicInfoDto(List<TblDynamicInfo> dynamicInfos){

@@ -110,6 +110,8 @@ public class SecUserController {
         }
     }
 
+
+
     @PutMapping("update")
     @ApiOperation("更新用户基本资料")
     public Result updateUserInfo(@RequestBody SecUser user){
