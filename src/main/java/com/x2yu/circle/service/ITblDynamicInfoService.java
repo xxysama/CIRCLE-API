@@ -1,5 +1,6 @@
 package com.x2yu.circle.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.x2yu.circle.dto.DynamicInfoDto;
 import com.x2yu.circle.entity.TblDynamicInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -23,4 +24,10 @@ public interface ITblDynamicInfoService extends IService<TblDynamicInfo> {
 
 
     public Integer countDynamicByUserIds(List<Integer> ids);
+
+
+    /**
+     * 根据搜索条件分页查询
+     * */
+    public IPage<TblDynamicInfo> searchDynamicByDes(String beginDate,String endDate,String des, Integer page);
 }

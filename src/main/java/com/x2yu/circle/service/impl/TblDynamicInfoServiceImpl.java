@@ -1,13 +1,18 @@
 package com.x2yu.circle.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.x2yu.circle.entity.TblDynamicInfo;
 import com.x2yu.circle.mapper.TblDynamicInfoMapper;
 import com.x2yu.circle.service.ITblDynamicInfoService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -41,5 +46,27 @@ public class TblDynamicInfoServiceImpl extends ServiceImpl<TblDynamicInfoMapper,
         QueryWrapper<TblDynamicInfo> wrapper = new QueryWrapper<>();
         wrapper.in("user_id",ids);
         return  dynamicInfoMapper.selectCount(wrapper);
+    }
+
+    @Override
+    public IPage<TblDynamicInfo> searchDynamicByDes(String beginDate, String endDate, String des, Integer page) {
+        int size = 5;
+
+        QueryWrapper<TblDynamicInfo> wrapper = new QueryWrapper<>();
+
+
+        // 如果有时间范围
+        if(!StringUtils.isBlank(beginDate)){
+            wrapper.between("created_time",beginDate,endDate);
+        }
+
+        if(!StringUtils.isBlank(des)){
+            wrapper.like("content",des);
+        }
+
+        Page<TblDynamicInfo> searPage = new Page<>(page,size);
+        IPage<TblDynamicInfo> iPage = dynamicInfoMapper.selectPage(searPage,wrapper);
+
+        return iPage;
     }
 }
