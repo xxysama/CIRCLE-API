@@ -13,6 +13,8 @@ import com.x2yu.circle.entity.TblBookTag;
 import com.x2yu.circle.service.ITblAuthorInfoService;
 import com.x2yu.circle.service.ITblBookInfoService;
 import com.x2yu.circle.service.ITblBookTagService;
+import com.x2yu.circle.utils.Result;
+import com.x2yu.circle.utils.ResultUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +78,30 @@ public class TblBookInfoController {
         List<SimpleBookDto> bookDtos = initSimpleBookDto(bookInfos);
 
         return bookDtos;
+    }
+
+    @GetMapping("alist/{page}")
+    @ApiOperation("管理端分页加载书籍信息")
+    public   IPage<TblBookInfo> getBooksInfoAdmin(@PathVariable("page") Integer page){
+
+        // 分页查询每页的数据量
+        Integer pageSize = 10;
+        Page<TblBookInfo> pages = new Page<>(page,pageSize);
+        // 获取查询分页数据
+
+        return bookInfoService.page(pages);
+    }
+
+    @GetMapping("asearch/{page}")
+    @ApiOperation("管理系统搜索图书信息")
+    public IPage<TblBookInfo> searchBooksInfoAdmin(@RequestParam("des")String des,@PathVariable("page") Integer page){
+
+        // 分页查询每页的数据量
+        Integer pageSize = 10;
+        Page<TblBookInfo> pages = new Page<>(page,pageSize);
+        // 获取查询分页数据
+
+        return bookInfoService.searchBooksInfoAdmin(pages,des);
     }
 
     @GetMapping("rand5/{bid}")
@@ -167,6 +193,20 @@ public class TblBookInfoController {
     }
 
 
+    @DeleteMapping("book/delete")
+    @ApiOperation("根据id删除书籍")
+    public Result deleteBookById(@RequestBody TblBookInfo bookInfo){
+
+        try {
+            bookInfoService.removeById(bookInfo.getId());
+            return ResultUtil.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.submitError("删除失败！");
+        }
+
+    }
+
 
     // 填充BookDto数据
     private List<SimpleBookDto> initSimpleBookDto(List<TblBookInfo> bookInfos){
@@ -202,6 +242,18 @@ public class TblBookInfoController {
 
         return  bookPageDto;
     }
+
+
+//    // 初始化作者信息
+//    private IPage<TblBookInfo> iniAuthorName(IPage<TblBookInfo> bookInfoIPage){
+//
+//        List<TblBookInfo> bookInfos = bookInfoIPage.getRecords();
+//
+//        bookInfos.forEach(tblBookInfo -> {
+//            // 根据作者id 查询作者信息
+//            TblAuthorInfo authorInfo = authorInfoService.getById(tblBookInfo.getAuthorId());
+//        });
+//    }
 
 
 }

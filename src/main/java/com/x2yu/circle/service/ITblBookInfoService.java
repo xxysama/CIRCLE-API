@@ -1,5 +1,7 @@
 package com.x2yu.circle.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.x2yu.circle.dto.SimpleBookDto;
 import com.x2yu.circle.entity.TblBookInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -31,4 +33,8 @@ public interface ITblBookInfoService extends IService<TblBookInfo> {
      * 根据描述模糊查询
      * */
     public List<TblBookInfo> getBookListBySearch(String des,Integer authorId);
+    /**
+     * 根据描述模糊查询
+     * */
+    public IPage<TblBookInfo> searchBooksInfoAdmin (Page<TblBookInfo> pages,String des);
 }

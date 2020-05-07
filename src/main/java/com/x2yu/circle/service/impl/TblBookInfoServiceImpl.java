@@ -1,7 +1,9 @@
 package com.x2yu.circle.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.x2yu.circle.dto.SimpleBookDto;
 import com.x2yu.circle.entity.TblBookInfo;
 import com.x2yu.circle.mapper.TblBookInfoMapper;
@@ -48,5 +50,16 @@ public class TblBookInfoServiceImpl extends ServiceImpl<TblBookInfoMapper, TblBo
                 .or()
                 .eq("author_id",authorId);
         return bookInfoMapper.selectList(wrapper);
+    }
+
+    @Override
+    public IPage<TblBookInfo> searchBooksInfoAdmin(Page<TblBookInfo> pages, String des) {
+
+        QueryWrapper<TblBookInfo>wrapper = new QueryWrapper<>();
+        wrapper.like("isbn",des)
+                .or()
+                .like("book_name",des);
+
+        return  bookInfoMapper.selectPage(pages,wrapper);
     }
 }
